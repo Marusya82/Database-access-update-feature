@@ -22,5 +22,6 @@ $ python main.py
 
 ##### Screenshots:
 ![Alt text](/../screenshots/Index_page.png "Index page")
+![Alt text](/../screenshots/List_devicerules.png "List device rules")
 ![Alt text](/../screenshots/Add_device.png "Add device")
 ![Alt text](/../screenshots/Remove_device.png "Remove device")
