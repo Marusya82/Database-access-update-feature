@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p id="demo">
+  <p style="color:blue"><strong>Step 3. Go through exisiting devices and select neccesary ones to create new device rules for this token:</strong></p>
+  <div class="data">
+  <table class="table table-condensed">
+  <ul class=entries>
+    <tr>
+      <th>Device name</th>
+      <th>Description</th>
+      <th>Version</th>
+      <th>Options</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.dname }}</td>
+      <td>{{ entry.ddescr }}</td>
+      <td>{{ entry.dver }}</td>
+      <td><input name="device" type="checkbox" value="{{ entry.did }}"/></td>
+    </tr>
+  {% else %}
+    <li><em>Table has no content so far.</em>
+  {% endfor %}
+  </ul>
+  </table>
+    <input type="button" style="color:blue" onclick="(getCheckboxes());" value="Proceed with the selected devices"/>
+  </div>
+  <script type="text/javascript">
+    function getCheckboxes() {
+      var checkboxes = document.querySelectorAll('input[name="device"]:checked');
+      var values = [];
+      Array.prototype.forEach.call(checkboxes, function(el) {
+        values.push(el.value);
+      });
+      values_str = values.join(); 
+      var data = {'action': 'select', 'data': values_str};
+      var URL = '{{ url_for('add_devicerule') }}';
+      $.post(URL, data);
+      $(document).ready(function() {
+        location = URL;
+      });
+      //return values;
+    }
+  </script>
+{% endblock %}

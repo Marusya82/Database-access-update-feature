@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Args table content</a>
+    </div>
+  </div>
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Token type</th>
+      <th>Has restriction</th>
+      <th>Restriction</th>
+      <th>Token ID</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.argname }}</td>
+      <td>{{ entry.argnum }}</td>
+      <td>{{ entry.ttype }}</td>
+      <td>{{ entry.hasrestr }}</td>
+      <td>{{ entry.restr }}</td>
+      <td>{{ entry.tokenid }}</td>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+{% endblock %}

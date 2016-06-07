@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block body %}
+  <a href="{{ url_for('index') }}" class="button">Return to homepage</a>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Edit devices table content</a>
+    </div>
+  </div>
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Version</th>
+      <th>Options</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td id="did">{{ entry.did }}</td>
+      <td>{{ entry.dname }}</td>
+      <td>{{ entry.ddescr }}</td>
+      <td>{{ entry.dver }}</td>
+      <td><button id="removebutton">remove</button></td>
+      <td><button id="editbutton">edit</button></td>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $( 'button' ).click(function() {
+        document.getElementbyId("did").contentEditable = true;
+      });
+    });
+    $(document).ready(function() {
+      $( 'button' ).click(function() {
+        $( 'tr' ).click(function() {
+          var num = {'content': parseInt($( this ).text())};
+          var URL = '{{ url_for ('edit_devices') }}';
+          $.post(URL, num);
+        });
+      });
+    });
+  </script>
+{% endblock %}

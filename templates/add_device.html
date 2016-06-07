@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+ {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <p style="color:blue"><strong>Step 1. Fill out the following fields to add a new device:</strong></p>
+  <form action="" method=post>
+    <div id="main" class="container">
+      Device name (required)<br>
+      <input type=text name=devicename value="{{
+          request.form.devicename }}"><br>
+      Description (recommended)<br>
+      <input type=text name=description value="{{
+	  request.form.description }}"><br>
+      Version (optional)<br>
+      <input type=text name=version value="{{
+          request.form.version }}"><br>
+      <button class="button postfix" style="color:blue" type=submit>Add device and proceed to step 2</button>
+    </div>
+  </form>
+{% endblock %}
+<

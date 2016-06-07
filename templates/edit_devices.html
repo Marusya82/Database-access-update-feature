@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Select device from the table below and press "remove" button. All dependencies will be removed as well.</strong></p>
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Version</th>
+      <th>Options</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+<!--    <tr id="tr{{ entry.did }}">--!>
+      <td id="dname{{ entry.did }}">{{ entry.dname }}</td>
+      <td id="ddescr{{ entry.did }}">{{ entry.ddescr }}</td>
+      <td id="dver{{ entry.did }}">{{ entry.dver }}</td>
+      <td><button style="color:blue" id="{{ entry.did }}" onClick="myRemove(this.id)">remove</button></td>
+      <!--<td><button id="{{ entry.did }}" onClick="myEdit(this.id)">edit</button></td>
+      <td><button id="{{ entry.did }} update" onClick="myUpdate(this.id)" disabled>update</button></td>--!>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+  <script>
+   function myUpdate(clicked_id) {
+       var URL = '{{ url_for ('edit_devices') }}';
+       var id = parseInt(clicked_id);
+       var name = $(document.getElementById("dname"+id)).text();
+       var ver = $(document.getElementById("dver"+id)).text();
+       var descr = $(document.getElementById("ddescr"+id)).text();
+       var data = { 'action': 'update', 'id': id, 'name': name, 'ver': ver, 'descr': descr} 
+       $.post(URL, data);
+       var URL = '{{ url_for ('show_devices') }}';
+       location.reload();
+   }
+   function myEdit(clicked_id) {
+       document.getElementById("dname"+clicked_id).contentEditable = true;
+       document.getElementById("ddescr"+clicked_id).contentEditable = true;
+       document.getElementById("dver"+clicked_id).contentEditable = true;
+       var clicked_tr =  document.getElementById("tr"+clicked_id);
+       document.getElementById(clicked_id+" update").disabled = false;
+       location.reload();
+   }
+   function myRemove(clicked_id) {
+       var URL = '{{ url_for ('edit_devices') }}';
+       var data = {'action': 'remove', 'id': clicked_id};
+       $.post(URL, data);
+       location.reload();
+   }
+  </script>
+{% endblock %}

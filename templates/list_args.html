@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>Arg name</th>
+      <th>Token type</th>
+      <th>Restriction</th>
+      <th>Associated token</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.argname }}</td>
+      <td>{{ entry.tokentype }}</td>
+      <td>{{ entry.restr }}</td>
+      <td>{{ entry.tokenid }}</td>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+{% endblock %}

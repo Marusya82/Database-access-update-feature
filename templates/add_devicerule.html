@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Add device rule</a>
+    </div>
+  </div>
+ {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form action="" method=post>
+    <div id="main" class="container">
+      Device ID (required)<br>
+      <input type=text name=deviceid value="{{
+          request.form.deviceid }}"><br>
+      Token ID (required)<br>
+      <input type=text name=tokenid value="{{
+	  request.form.tokenid }}"><br>
+      Rule line (optional)<br>
+      <input type=text name=ruleline value="{{
+          request.form.ruleline }}"><br>
+      <button class="button postfix" type=submit>Next</button>
+    </div>
+  </form>
+{% endblock %}
+<

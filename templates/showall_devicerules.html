@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+  <meta charset="utf-8">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Device rules table content</a>
+    </div>
+  </div>
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>Device</th>
+      <th>Token</th>
+      <th>Rule line</th>
+      <th>Condition</th>
+      <th>Configuration command</th>
+    </tr>
+  {% for entry in entries[0] %}
+    <tr>
+      <td>{{ entry.did }}</td>
+      <td>{{ entry.tid }}</td>
+      <td>{{ entry.rule }}</td>
+      <td>{{ entry.condition }}</td>
+      <td>{{ entry.config }}</td>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+{% endblock %}

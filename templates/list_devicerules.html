@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block body %}
+  <meta charset="utf-8">
+   {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>List device rules:</strong></p>
+  <div class=container>
+  <ul class=entries>
+  <select id="device">
+    <option>Select device</option>
+    <option id="0">*all</option>
+    {% for entry in entries[0] %}
+    <option id="{{ entry.did }}">{{ entry.dname }}</option>
+    {% else %}
+    <option>The requested table has no content so far.</option>
+    {% endfor %}
+  </select>
+  <select id="token">
+    <option>Select token</option>
+    <option id="0">*all</option>
+    {% for entry in entries[1] %}
+    <option id="{{ entry.tid }}">{{ entry.tname }}</option>
+    {% else %}
+    <option>The requested table has no content so far.</option>
+    {% endfor %}
+  </select>
+  <button class="button postfix" style="color:blue" type=submit onClick="list()">List</button>
+  </ul>
+  </div>
+  <p id="sel_device"></p>
+  <p id="sel_token"></p>
+  <p id="result"></p>
+  <p id="result2"></p>
+<!--  <form action="{{ url_for('add_rule', param='token') }}">
+      <button style="color:blue" type="submit">Add new rule for 1 token and 1 or more devices</button>
+  </form>
+  <form action="{{ url_for('add_rule', param='device') }}">
+      <button style="color:blue" type="submit">Add new rule for 1 device and 1 or more tokens</button>
+  </form>--!>
+  <script>
+    function list() {
+      var dfield = document.getElementById("device");
+      var tfield = document.getElementById("token");
+      var selected_device_name = dfield.options[dfield.selectedIndex].value;
+      var selected_token_name = tfield.options[tfield.selectedIndex].value;
+      var selected_device_id = dfield.options[dfield.selectedIndex].id;
+      var selected_token_id = tfield.options[tfield.selectedIndex].id;
+      
+      if (selected_device_name == "Select device") {
+        alert("Please select device!");
+        return;
+      } else if (selected_token_name == "Select token") {
+        alert("Please select token!");
+        return;
+      } else {
+        //document.getElementById("sel_device").innerHTML = "Selected device type: " + selected_device_id;
+        //document.getElementById("sel_token").innerHTML= "Selected token type: " + selected_token_id;
+        var str = selected_device_id + "," + selected_token_id;
+        request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (request.readyState == 4 && request.status == 200) {
+            document.getElementById("result").innerHTML = request.responseText;
+          }
+        };
+        request.open("GET", "getdevicerules"+"/"+str, true);
+        request.send();
+      }
+    }
+  </script>
+{% endblock %}

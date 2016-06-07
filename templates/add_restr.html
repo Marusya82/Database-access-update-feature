@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Step 2b. Add restrictions to the arguments by modifying fields in the table below (if needed), otherwise press "Proceed" button below:</strong></p>
+  <div class="container">
+  <table class="table table-condensed">
+  <ul class=entries>
+    <tr>
+      <th>Argument</th>
+      <th>Restriction</th>
+      <th>Argument number</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.arg }}</td>
+      <td id="restr{{ entry.argid }}" contentEditable>{{ entry.restr }}</td>
+      <td id="num{{ entry.argid }}" contentEditable>{{ entry.argnum }}</td>
+      <td><button id="{{ entry.argid }}" style="color:blue" onClick="myUpdate(this.id);">Update</button></td>
+    </tr>
+  {% else %}
+    <li><em>No entries here so far</em>
+  {% endfor %}
+  </ul>
+  </table>
+  </div>
+  <button class="button postfix" style="color:blue" onClick="submit();">Proceed to step 3</button>
+  <script>
+    function myUpdate(clicked_id) {
+      var restr = $(document.getElementById("restr"+clicked_id)).text();
+      var num = $(document.getElementById("num"+clicked_id)).text();
+      var data = { 'action': 'update', 'id': clicked_id, 'restr': restr, 'num': num} 
+      var URL = '{{ url_for ('update_restr') }}';
+      $.post(URL, data);
+    }
+    function submit() {
+      var URL = '{{ url_for ('add_rule', param='token') }}';
+      location = URL;
+    }
+  </script>
+{% endblock %}

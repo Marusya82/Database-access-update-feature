@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+  <style>
+    ul#tosort, ul#tosort li {
+      margin:0;
+      padding:0;
+    }
+    ul#tosort li {
+      list-style-type:none;
+      display:block;
+      width:9em;
+      border:1px solid #808080;
+      text-align:center;
+      text-decoration:none;
+    }
+  </style>
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Step 2a. Re-order the arguments by dragging (if needed), otherwise press "Submit"i button below:</strong></p>
+  <div class=container>
+    <ul id="tosort" class=entries>
+    {% for entry in entries %}
+      <li>{{ entry }} </li>
+    {% else %}
+      <li><em>You haven't specified any arguments. Click submit below.</li>
+    {% endfor %}
+    </ul>
+    <p></p>
+    <button style="color:blue" onClick="mySubmit()">Submit and proceed to step 2b</button>
+  </div>
+  <script>
+    Sortable.create(tosort);
+    function mySubmit() {
+      var args = $(document.getElementById("tosort")).text();
+      var URL = '{{ url_for ('add_restr') }}';
+      var data = {'args': args}
+      $.post(URL, data);
+      location = URL;
+    }
+  </script>
+{% endblock %}

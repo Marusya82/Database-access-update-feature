@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+ {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form action="" method=post>
+    <div id="main" class="container">
+      Arg name (required)<br>
+      <input type=text name=argname value="{{
+          request.form.argname }}"><br>
+      Arg number<br>
+      <input type=text name=argnum value="{{
+	  request.form.argnum }}"><br>
+      Restriction<br>
+      <input type=text name=restr value="{{
+          request.form.restr }}"><br>
+      <button class="button postfix" type=submit>Add argument</button>
+      <button class="button postfix" type=submit>Skip this step and continue to device rules</button>
+    </div>
+  </form>
+{% endblock %}
+<

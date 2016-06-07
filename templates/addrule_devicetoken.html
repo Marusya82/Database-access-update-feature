@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+  <meta charset="utf-8">
+   {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <p style="color:blue"><strong>Add device rule (or click Home to return to the menu):</strong></p>
+  <div class=container>
+  <ul class=entries>
+  <select id="device">
+    <option>Select device</option>
+    {% for entry in entries[0] %}
+    <option id="{{ entry.did }}">{{ entry.dname }}</option>
+    {% else %}
+    <option>The requested table has no content so far.</option>
+    {% endfor %}
+  </select><br>
+    {% for entry in entries[1] %}
+    <input name="token" type="checkbox" value="{{ entry.tid }}"/>{{ entry.tname }}<br>
+    {% endfor %}
+  <br><button class="button postfix" style="color:blue" type=submit onClick="add_devicerule()">Add device rule</button>
+  </ul>
+  </div>
+  <p id="sel_device"></p>
+  <p id="sel_token"></p>
+  <p id="result"></p>
+  <script>
+    function add_devicerule() {
+      var checkboxes = document.querySelectorAll('input[name="token"]:checked');
+      var tokens = [];
+      Array.prototype.forEach.call(checkboxes, function(el) {
+        tokens.push(el.value);
+      });
+      tokens_ids = tokens.join(); 
+      var dfield = document.getElementById("device");
+      var selected_device_name = dfield.options[dfield.selectedIndex].value;
+      var devices_ids = dfield.options[dfield.selectedIndex].id;
+      if (selected_device_name == "Select device") {
+        alert("Please select device!");
+        return;
+      } else if (tokens.length == 0) {
+        alert("Please select token/tokens!");
+        return;
+      } else {
+        document.getElementById("sel_token").innerHTML = "Selected token: " + tokens_ids;
+        document.getElementById("sel_device").innerHTML= "Selected device: " + devices_ids;
+        var str = devices_ids + ";" + tokens_ids;
+        document.getElementById("result").innerHTML= str;
+        var URL = '{{ url_for ('add_devicerule') }}';
+        var data = {'devices': devices_ids, 'tokens': tokens_ids};
+        $.post(URL, data);
+      }
+    }
+  </script>
+{% endblock %}

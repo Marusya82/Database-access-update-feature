@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Select token from the table below and press "remove" button. All dependencies will be removed as well.</strong></p>
+  <div class="container">
+  <table class="table table-condensed">
+  <ul class=entries>
+    <tr>
+      <th>Type</th>
+      <th>Token</th>
+      <th>Description</th>
+      <th>Args</th>
+      <th>Result</th>
+      <th>Options</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.ttype }}</td>
+      <td>{{ entry.ttoken }}</td>
+      <td>{{ entry.tdescr }}</td>
+      <td>{{ entry.targs }}</td>
+      <td>{{ entry.tres }}</td>
+      <td><button id="{{ entry.tid }}" style="color:blue" onClick="myRemove(this.id)">remove</button></td>
+    </tr>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+  </table>
+  </div>
+  <script>
+    function myRemove(clicked_id) {
+       var URL = '{{ url_for ('edit_tokens') }}';
+       var data = {'action': 'remove', 'id': clicked_id};
+       $.post(URL, data);
+       
+       $( document ).ready(function() {
+         console.log('ready');
+         location.reload();
+       });
+    }
+  </script>
+{% endblock %}

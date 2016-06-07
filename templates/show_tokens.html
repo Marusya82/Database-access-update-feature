@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p style="color:blue"><strong>Step 2. Select tokens in order to create new device rules</strong></p>
+  <div class="container">
+  <table class="table table-condensed">
+  <ul class=entries>
+    <tr>
+      <th>Type</th>
+      <th>Token</th>
+      <th>Description</th>
+      <th>Results</th>
+      <th>Args</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.ttype }}</td>
+      <td>{{ entry.ttoken }}</td>
+      <td>{{ entry.tdescr }}</td>
+      <td>{{ entry.tres }}</td>
+      <td>{{ entry.targs }}</td>
+    </tr>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+  </table>
+  </div>
+  <form action="" method=post>
+    <div id="main" class="container">
+      <button class="button postfix" type=submit>Next</button>
+    </div>
+  </form>
+{% endblock %}

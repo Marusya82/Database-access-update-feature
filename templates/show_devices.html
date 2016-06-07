@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Devices table content</a>
+    </div>
+  </div>
+  <div class=container>
+  <ul class=entries>
+  <table class="table table-condensed">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Version</th>
+      <th>Options</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.did }}</td>
+      <td>{{ entry.dname }}</td>
+      <td>{{ entry.ddescr }}</td>
+      <td>{{ entry.dver }}</td>
+    </tr>
+  {% else %}
+    <li><em>The requested table has no content so far.</em>
+  {% endfor %}
+  </table>
+  </ul>
+  </div>
+  <form action="" method=post>
+    <div id="main" class="container">
+      <button class="button postfix" type=submit>Next</button>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Update device rules by modifying fields in the table below (if needed), otherwise press "Proceed" button below:</strong></p>
+  <div class="container">
+  <table class="table table-condensed">
+  <ul class=entries>
+    <tr>
+      <th>Rule line</th>
+      <th>Condition</th>
+      <th>Configuration command</th>
+    </tr>
+  {% for entry in entries %}
+    <tr>
+      <td>{{ entry.rline }}</td>
+      <td id="cond{{ entry.rid }}" contentEditable>{{ entry.rcond }}</td>
+      <td id="command{{ entry.rid }}" contentEditable>{{ entry.rcommand }}</td>
+      <td><button id="{{ entry.rid }}" style="color:blue" onClick="myUpdate(this.id);">Update</button></td>
+    </tr>
+  {% else %}
+    <li><em>No entries here so far</em>
+  {% endfor %}
+  </ul>
+  </table>
+  </div>
+  <button class="button postfix" style="color:blue" onClick="submit();">Next</button>
+  <script>
+    function myUpdate(clicked_id) {
+      var cond = $(document.getElementById("cond"+clicked_id)).text();
+      var command = $(document.getElementById("command"+clicked_id)).text();
+      var data = { 'action': 'update', 'id': clicked_id, 'restr': cond, 'num': command} 
+      var URL = '{{ url_for ('update_rules') }}';
+      $.post(URL, data);
+    }
+    function submit() {
+      var URL = '{{ url_for ('index') }}';
+      location = URL;
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand">Remove device</a>
+    </div>
+  </div>
+  {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form action="" method=post>
+    <div id="main" class="container">
+      Device name or ID (required)<br>
+      <input name=devicename type=text value="{{
+          request.form.devicename }}"><br>
+      <button class="button postfix" type=submit>Remove</button>
+    </div>
+  </form>
+{% endblock %}
+<

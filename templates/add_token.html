@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}
+    <p style="color:red" class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <p id="demo"></p>
+  <p style="color:blue"><strong>Step 1. Fill out the following fields to add a new token:</strong></p>
+  <form action="" method=post>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose token type
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li id="Action" onClick="reflect(this.id)"><a href="{{ url_for('add_token', t_type="Action")}}">Action</a></li>
+        <li id="Noun" onClick="reflect(this.id)"><a href="{{ url_for('add_token', t_type="Noun")}}">Noun</a></li>
+        <li id="Attribute" onClick="reflect(this.id)"><a href="{{ url_for('add_token', t_type="Attribute")}}">Attribute</a></li>
+        <li id="Condition" onClick="reflect(this.id)"><a href="{{ url_for('add_token', t_type="Condition")}}">Condition</a></li>
+      </ul>
+    </div>
+      <br>
+      Token name (required)<br>
+      <input type=text name=tokenname value="{{ request.form.tokenname }}"><br>
+      Description<br>
+      <input type=text name=description value="{{ request.form.description }}"><br>
+      Result<br>
+      <input type=text name=result value="{{ request.form.result }}"><br>
+      Agruments (separated by space)<br>
+      <input type=text name=args value="{{ request.form.args }}"><br>
+      <button class="button postfix" style="color:blue" type=submit>Add token and proceed to step 2</button>
+    </div>
+  </form>
+{% endblock %}
